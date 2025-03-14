@@ -1,6 +1,48 @@
 ﻿#include <iostream>
 
-class Triangle
+class Figure
+{
+protected:
+    int side_counts;
+public:
+    Figure(int side_counts) : side_counts(side_counts)
+    {}
+    virtual int get_a()
+    {
+        return 0;
+    }
+    virtual int get_b()
+    {
+        return 0;
+    }
+    virtual int get_c()
+    {
+        return 0;
+    }
+    virtual int get_d()
+    {
+        return 0;
+    }
+
+    virtual int get_A()
+    {
+        return 0;
+    }
+    virtual int get_B()
+    {
+        return 0;
+    }
+    virtual int get_C()
+    {
+        return 0;
+    }
+    virtual int get_D()
+    {
+        return 0;
+    }
+};
+
+class Triangle : public Figure
 {
 protected:
     int a;
@@ -10,7 +52,7 @@ protected:
     int B;
     int C;
 public:
-    Triangle(int a, int b, int c, int A, int B, int C)
+    Triangle(int a, int b, int c, int A, int B, int C) : Figure(3)
     {
         this->a = a;
         this->b = b;
@@ -19,27 +61,27 @@ public:
         this->B = B;
         this->C = C;
     }
-    int get_a()
+    int get_a() override
     {
         return a;
     }
-    int get_b()
+    int get_b() override
     {
         return b;
     }
-    int get_c()
+    int get_c() override
     {
         return c;
     }
-    int get_A()
+    int get_A() override
     {
         return A;
     }
-    int get_B()
+    int get_B() override
     {
         return B;
     }
-    int get_C()
+    int get_C() override
     {
         return C;
     }
@@ -66,7 +108,7 @@ public:
     {}
 };
 
-class Quadrangle
+class Quadrangle : public Figure
 {
 protected:
     int a;
@@ -78,7 +120,7 @@ protected:
     int C;
     int D;
 public:
-    Quadrangle(int a, int b, int c, int d, int A, int B, int C, int D)
+    Quadrangle(int a, int b, int c, int d, int A, int B, int C, int D) : Figure(4)
     {
         this->a = a;
         this->b = b;
@@ -89,35 +131,35 @@ public:
         this->C = C;
         this->D = D;
     }
-    int get_a()
+    int get_a() override
     {
         return a;
     }
-    int get_b()
+    int get_b() override
     {
         return b;
     }
-    int get_c()
+    int get_c() override
     {
         return c;
     }
-    int get_d()
+    int get_d() override
     {
         return d;
     }
-    int get_A()
+    int get_A() override
     {
         return A;
     }
-    int get_B()
+    int get_B() override
     {
         return B;
     }
-    int get_C()
+    int get_C() override
     {
         return C;
     }
-    int get_D()
+    int get_D() override
     {
         return D;
     }
@@ -151,18 +193,14 @@ public:
     {}
 };
 
-void print_info(Triangle& triangle)
+void print_info(Figure* base)
 {
-    std::cout << "Стороны: a=" << triangle.get_a() << " b=" << triangle.get_b() << " c=" << triangle.get_c() << '\n';
-    std::cout << "Углы: A=" << triangle.get_A() << " B=" << triangle.get_B() << " C=" << triangle.get_C() << "\n\n";
-}
-
-void print_info(Quadrangle& quadrangle)
-{
-    std::cout << "Стороны: a=" << quadrangle.get_a() << " b=" << quadrangle.get_b() << " c=" << quadrangle.get_c() << 
-    " d=" << quadrangle.get_d() << '\n';
-    std::cout << "Углы: A=" << quadrangle.get_A() << " B=" << quadrangle.get_B() << " C=" << quadrangle.get_C() << " D=" <<
-    quadrangle.get_D() << "\n\n";
+    std::cout << "Стороны: a=" << base->get_a() << " b=" << base->get_b() << " c=" << base->get_c();
+    if (base->get_d() != 0) std::cout << " d=" << base->get_d() << '\n';
+    else std::cout << '\n';
+    std::cout << "Углы: A=" << base->get_A() << " B=" << base->get_B() << " C=" << base->get_C();
+    if (base->get_D() != 0) std::cout << " D=" << base->get_D() << "\n\n";
+    else std::cout << "\n\n";
 }
 
 int main()
@@ -179,22 +217,22 @@ int main()
     Rhombus rhombus(30, 30, 40);
 
     std::cout << "Треугольник:\n";
-    print_info(triangle);
+    print_info(&triangle);
     std::cout << "Прямоугольный треугольник:\n";
-    print_info(rightTriangle);
+    print_info(&rightTriangle);
     std::cout << "Равнобедренный треугольник:\n";
-    print_info(isoscelesTriangle);
+    print_info(&isoscelesTriangle);
     std::cout << "Равносторонний треугольник::\n";
-    print_info(equilateralTriangle);
+    print_info(&equilateralTriangle);
     std::cout << "Четырёхугольник:\n";
-    print_info(quadrangle);
+    print_info(&quadrangle);
     std::cout << "Прямоугольник:\n";
-    print_info(rectangle);
+    print_info(&rectangle);
     std::cout << "Квадрат:\n";
-    print_info(square);
+    print_info(&square);
     std::cout << "Параллелограмм:\n";
-    print_info(parallelogram);
+    print_info(&parallelogram);
     std::cout << "Ромб:\n";
-    print_info(rhombus);
+    print_info(&rhombus);
     return EXIT_SUCCESS;
 }
